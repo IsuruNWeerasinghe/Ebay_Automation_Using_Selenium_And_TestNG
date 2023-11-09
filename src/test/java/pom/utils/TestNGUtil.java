@@ -1,4 +1,4 @@
-package pom.testUtils;
+package pom.utils;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
@@ -12,10 +12,9 @@ public class TestNGUtil {
     public BrowserFactory browserFactoryInstance = null;
     protected ExtentReports extent = new ExtentReports();
     protected ExtentSparkReporter spark = new ExtentSparkReporter("reports/Ebay_Automation_Using_Selenium_And_TestNG_Project_Report.html");
-
     public WebDriverWait webDriverWait = null;
-
     public ExtentTest extentTest = null;
+
 
     @BeforeTest
     public void createReport(){
@@ -31,9 +30,12 @@ public class TestNGUtil {
     }
 
     @AfterClass
-    public void flushReport(){
+    public void quitWebDriver(){
         browserFactoryInstance.quitDriver();
-        extent.flush();
     }
 
+    @AfterTest
+    public void flushReport(){
+        extent.flush();
+    }
 }

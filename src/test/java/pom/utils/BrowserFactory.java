@@ -1,4 +1,4 @@
-package pom.testUtils;
+package pom.utils;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;

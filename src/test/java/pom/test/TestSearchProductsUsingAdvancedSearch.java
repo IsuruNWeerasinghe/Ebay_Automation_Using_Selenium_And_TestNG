@@ -10,7 +10,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pom.pages.*;
-import pom.testUtils.TestNGUtil;
+import pom.pages.search.PageAdvanceSearch;
+import pom.pages.search.PageSearchResults;
+import pom.pages.search.PageSelectedSearchItem;
+import pom.pages.shoppingCart.PageShoppingCart;
+import pom.utils.TestNGUtil;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -22,7 +26,7 @@ public class TestSearchProductsUsingAdvancedSearch extends TestNGUtil {
     private final static String ITEMS_LIST_EXCEL_FILE_NAME_AND_FILE_PATH = "Items_list.xlsx";
     private final static String ITEMS_LIST_EXCEL_FILE_SHEET_NAME = "Sheet1";
 
-    private PageEbayHome pageEBayHome;
+    private PageEbayHome pageEbayHome;
     private PageSearchResults pageSearchResults;
     private PageShoppingCart pageShoppingCart;
 
@@ -107,38 +111,38 @@ public class TestSearchProductsUsingAdvancedSearch extends TestNGUtil {
                                                       String shippingOptions, String itemLocation, String sortBy, String resultsPerPage) {
 
         //Initiating report.
-        extentTest = extent.createTest("Test Case 1: Search Products in Advanced Search")
+        extentTest = extent.createTest("Test 1: Search Products in Advanced Search")
                 .assignAuthor("Isuru Weerasinghe");
-        extentTest.log(Status.INFO,"Test Case 1: Started");
+        extentTest.log(Status.INFO,"Test 1: Started");
 
         //Opening browser and navigating to EBay homepage.
         PageBase pageBase = PageFactory.initElements(browserFactoryInstance.getDriver(), PageBase.class);
-        pageEBayHome = pageBase.openApplication();
-        webDriverWait.until(ExpectedConditions.visibilityOf(pageEBayHome.topNavigationSportsItem));
-        extentTest.log(Status.INFO,"Test Case 1: Ebay homepage opened.");
+        pageEbayHome = pageBase.openApplication();
+        webDriverWait.until(ExpectedConditions.visibilityOf(pageEbayHome.logo));
+        extentTest.log(Status.INFO,"Test 1: Ebay homepage opened.");
 
         //Navigating to Advanced Search page.
-        PageAdvanceSearch pageAdvanceSearch = pageEBayHome.clickAdvancedSearchButton();
+        PageAdvanceSearch pageAdvanceSearch = pageEbayHome.clickOnElementAndOpenNewPage(pageEbayHome.buttonAdvanced, PageAdvanceSearch.class);
         webDriverWait.until(ExpectedConditions.visibilityOf(pageAdvanceSearch.textFieldKeywordsOrItemNumber));
-        extentTest.log(Status.INFO,"Test Case 1: Navigated to the Advanced Search.");
+        extentTest.log(Status.INFO,"Test 1: Navigated to the Advanced Search.");
 
-        //Adding searching criteria according to the given excel file.
-        if(!searchValue.isEmpty()) pageAdvanceSearch.typeOnEnterKeywords(searchValue);
-        if(!keywordOptions.isEmpty()) pageAdvanceSearch.selectKeywordOptions(keywordOptions);
-        if(!category.isEmpty()) pageAdvanceSearch.selectCategory(category);
+        //Adding searching criteria according to the given Excel file.
+        if(!searchValue.isEmpty()) pageAdvanceSearch.typeOnTextField(pageAdvanceSearch.textFieldKeywordsOrItemNumber, searchValue);
+        if(!keywordOptions.isEmpty()) pageAdvanceSearch.selectDropdownValue(pageAdvanceSearch.dropdownKeywordOptions, keywordOptions);
+        if(!category.isEmpty()) pageAdvanceSearch.selectDropdownValue(pageAdvanceSearch.dropdownInThisCategory, category);
 
         pageAdvanceSearch.scrollPageToElement(pageAdvanceSearch.textFieldMaxPrice);
-        if(!minPrice.isEmpty())pageAdvanceSearch.addMinPrice(minPrice);
-        if(!maxPrice.isEmpty()) pageAdvanceSearch.addMaxPrice(maxPrice);
+        if(!minPrice.isEmpty())pageAdvanceSearch.typeOnTextField(pageAdvanceSearch.textFieldMinPrice, minPrice);
+        if(!maxPrice.isEmpty()) pageAdvanceSearch.typeOnTextField(pageAdvanceSearch.textFieldMaxPrice, maxPrice);
 
         pageAdvanceSearch.scrollPageToElement(pageAdvanceSearch.radioButtonBuyingFormatAcceptsOffers);
         switch (buyingFormat){
             case "Accepts offers" :
-                pageAdvanceSearch.clickOnBuyingFormatAcceptOffers();
+                pageAdvanceSearch.clickOnCheckboxOrRadioButton(pageAdvanceSearch.radioButtonBuyingFormatAcceptsOffers);
                 break;
 
             case "Buy It Now" :
-                pageAdvanceSearch.clickOnBuyingFormatBuyItNow();
+                pageAdvanceSearch.clickOnCheckboxOrRadioButton(pageAdvanceSearch.radioButtonBuyingFormatBuyItNow);
                 break;
 
             default:
@@ -148,15 +152,15 @@ public class TestSearchProductsUsingAdvancedSearch extends TestNGUtil {
         pageAdvanceSearch.scrollPageToElement(pageAdvanceSearch.radioButtonConditionNew);
         switch (condition){
             case "New" :
-                pageAdvanceSearch.clickOnConditionNew();
+                pageAdvanceSearch.clickOnCheckboxOrRadioButton(pageAdvanceSearch.radioButtonConditionNew);
                 break;
 
             case "Used" :
-                pageAdvanceSearch.clickOnConditionUsed();
+                pageAdvanceSearch.clickOnCheckboxOrRadioButton(pageAdvanceSearch.radioButtonConditionUsed);
                 break;
 
             case "Not specified" :
-                pageAdvanceSearch.clickOnConditionNotSpecified();
+                pageAdvanceSearch.clickOnCheckboxOrRadioButton(pageAdvanceSearch.radioButtonConditionNotSpecified);
                 break;
 
             default:
@@ -166,19 +170,19 @@ public class TestSearchProductsUsingAdvancedSearch extends TestNGUtil {
         pageAdvanceSearch.scrollPageToElement(pageAdvanceSearch.checkBoxShowResultsAuthorizedSeller);
         switch (showResults){
             case "Authorized seller" :
-                pageAdvanceSearch.clickOnShowResultsAuthorizedSeller();
+                pageAdvanceSearch.clickOnCheckboxOrRadioButton(pageAdvanceSearch.checkBoxShowResultsAuthorizedSeller);
                 break;
 
             case "Returns accepted" :
-                pageAdvanceSearch.clickOnShowResultsReturnsAccepted();
+                pageAdvanceSearch.clickOnCheckboxOrRadioButton(pageAdvanceSearch.checkBoxShowResultsReturnsAccepted);
                 break;
 
             case "Sale items" :
-                pageAdvanceSearch.clickOnShowResultsSaleItems();
+                pageAdvanceSearch.clickOnCheckboxOrRadioButton(pageAdvanceSearch.checkBoxShowResultsSaleItems);
                 break;
 
             case "Deals and savings" :
-                pageAdvanceSearch.clickOnShowResultsDealsAndSavings();
+                pageAdvanceSearch.clickOnCheckboxOrRadioButton(pageAdvanceSearch.checkBoxShowResultsDealsAndSavings);
                 break;
 
             default:
@@ -186,17 +190,17 @@ public class TestSearchProductsUsingAdvancedSearch extends TestNGUtil {
         }
 
         pageAdvanceSearch.scrollPageToElement(pageAdvanceSearch.textFieldMultipleItemsMinQuantity);
-        if(!multipleItemsMinQuantity.isEmpty()) pageAdvanceSearch.addMultipleItemsMinQuantity(minPrice);
-        if(!multipleItemsMaxQuantity.isEmpty()) pageAdvanceSearch.addMultipleItemsMaxQuantity(maxPrice);
+        if(!multipleItemsMinQuantity.isEmpty()) pageAdvanceSearch.typeOnTextField(pageAdvanceSearch.textFieldMultipleItemsMinQuantity, multipleItemsMinQuantity);
+        if(!multipleItemsMaxQuantity.isEmpty()) pageAdvanceSearch.typeOnTextField(pageAdvanceSearch.textFieldMultipleItemsMinQuantity, multipleItemsMaxQuantity);
 
         pageAdvanceSearch.scrollPageToElement(pageAdvanceSearch.checkBoxShippingOptionsFreeShipping);
         switch (shippingOptions){
             case "Free shipping" :
-                pageAdvanceSearch.clickOnShippingOptionsFreeShipping();
+                pageAdvanceSearch.clickOnCheckboxOrRadioButton(pageAdvanceSearch.checkBoxShippingOptionsFreeShipping);
                 break;
 
             case "Local pickup" :
-                pageAdvanceSearch.clickOnShippingOptionsLocalPickup();
+                pageAdvanceSearch.clickOnCheckboxOrRadioButton(pageAdvanceSearch.checkBoxShippingOptionsLocalPickup);
                 break;
 
             default:
@@ -207,15 +211,15 @@ public class TestSearchProductsUsingAdvancedSearch extends TestNGUtil {
         pageAdvanceSearch.scrollPageToElement(pageAdvanceSearch.radioButtonItemLocationWorldwide);
         switch (itemLocation){
             case "Worldwide" :
-                pageAdvanceSearch.clickOnItemLocationWorldwide();
+                pageAdvanceSearch.clickOnCheckboxOrRadioButton(pageAdvanceSearch.radioButtonItemLocationWorldwide);
                 break;
 
             case "US Only" :
-                pageAdvanceSearch.clickOnItemLocationUsOnly();
+                pageAdvanceSearch.clickOnCheckboxOrRadioButton(pageAdvanceSearch.radioButtonItemLocationUsOnly);
                 break;
 
             case "North America" :
-                pageAdvanceSearch.clickOnItemLocationNorthAmerica();
+                pageAdvanceSearch.clickOnCheckboxOrRadioButton(pageAdvanceSearch.radioButtonItemLocationNorthAmerica);
                 break;
 
             default:
@@ -224,20 +228,20 @@ public class TestSearchProductsUsingAdvancedSearch extends TestNGUtil {
         }
 
         pageAdvanceSearch.scrollPageToElement(pageAdvanceSearch.dropdownSortBy);
-        if(!sortBy.isEmpty()) pageAdvanceSearch.selectSortBy(sortBy);
-        if(!resultsPerPage.isEmpty()) pageAdvanceSearch.selectResultsPerPage(resultsPerPage);
+        if(!sortBy.isEmpty()) pageAdvanceSearch.selectDropdownValue(pageAdvanceSearch.dropdownSortBy, sortBy);
+        if(!resultsPerPage.isEmpty()) pageAdvanceSearch.selectDropdownValue(pageAdvanceSearch.dropdownResultsPerPage, resultsPerPage);
 
         pageAdvanceSearch.scrollPageToElement(pageAdvanceSearch.buttonSearch);
-        extentTest.log(Status.INFO,"Test Case 1: Searching criteria added.");
+        extentTest.log(Status.INFO,"Test 1: Searching criteria added.");
 
         //Clicking "Search" button for search item.
-        pageSearchResults = pageAdvanceSearch.clickSearchButton();
+        pageSearchResults = pageAdvanceSearch.clickOnElementAndOpenNewPage(pageAdvanceSearch.buttonSearch, PageSearchResults.class);
         webDriverWait.until(ExpectedConditions.visibilityOf(pageSearchResults.firstElementSearchResults));
-        extentTest.log(Status.INFO,"Test Case 1: Search results page opened.");
+        extentTest.log(Status.INFO,"Test 1: Search results page opened.");
 
         //Clicking on first item of the search results.
-        PageSelectedSearchItem pageSelectedSearchItem = pageSearchResults.clickFirstSearchElement();
-        extentTest.log(Status.INFO,"Test Case 1: First item has selected from the search results.");
+        PageSelectedSearchItem pageSelectedSearchItem = pageSearchResults.clickOnElementAndOpenNewPage(pageSearchResults.firstElementSearchResults, PageSelectedSearchItem.class);
+        extentTest.log(Status.INFO,"Test 1: First item has selected from the search results.");
 
         //Make newly opened tab as the active window.
         ArrayList<String> currentURL = new ArrayList<String>(browserFactoryInstance.getDriver().getWindowHandles());
@@ -245,9 +249,9 @@ public class TestSearchProductsUsingAdvancedSearch extends TestNGUtil {
         webDriverWait.until(ExpectedConditions.visibilityOf(pageSelectedSearchItem.buttonAddToCart));
 
         //Clicking "Add To Cart" button.
-        pageShoppingCart = pageSelectedSearchItem.clickAddToCartButton();
+        pageShoppingCart = pageSelectedSearchItem.clickOnElementAndOpenNewPage(pageSelectedSearchItem.buttonAddToCart, PageShoppingCart.class);
         webDriverWait.until(ExpectedConditions.visibilityOf(pageShoppingCart.labelShoppingCart));
-        extentTest.log(Status.INFO,"Test Case 1: Shopping cart page opened.");
+        extentTest.log(Status.INFO,"Test 1: Shopping cart page opened.");
 
         //Closing the "Shopping Cart" page.
         browserFactoryInstance.getDriver().switchTo().window(currentURL.get(1)).close();
@@ -255,29 +259,30 @@ public class TestSearchProductsUsingAdvancedSearch extends TestNGUtil {
         //Making "Search Results" page active window.
         browserFactoryInstance.getDriver().switchTo().window(currentURL.get(0));
         webDriverWait.until(ExpectedConditions.visibilityOf(pageSearchResults.labelSearchResults));
-        extentTest.log(Status.INFO,"Test Case 1: Shopping cart page has closed. Item has successfully added to the cart.");
-        extentTest.log(Status.PASS,"Test Case 1: Passed Successfully.");
+        extentTest.log(Status.INFO,"Test 1: Shopping cart page has closed. Item has successfully added to the cart.");
+        extentTest.log(Status.PASS,"Test 1: Passed Successfully.");
     }
 
     @Test(dependsOnMethods = "testProductsSearchUsingAdvancedSearch")
     public void testItemsInShoppingCart() {
-        extentTest = extent.createTest("Test Case 2: Open shopping cart and view Total Price, Shipping Charge and Sub Total")
+        extentTest = extent.createTest("Test 2: Open shopping cart and view Total Price, Shipping Charge and Sub Total")
                 .assignAuthor("Isuru Weerasinghe");
 
         //Clicking on "Shopping Cart" icon in top right corner.
-        pageShoppingCart = pageSearchResults.clickShoppingCartIcon();
+        pageShoppingCart = pageSearchResults.clickOnElementAndOpenNewPage(pageSearchResults.iconShoppingCart, PageShoppingCart.class);
         webDriverWait.until(ExpectedConditions.visibilityOf(pageShoppingCart.labelShoppingCart));
-        extentTest.log(Status.INFO,"Test Case 2: Shopping cart page has opened.");
+        extentTest.log(Status.INFO,"Test 2: Shopping cart page has opened.");
 
         //Getting prices in "Shopping Cart" page.
-        String totalPrice = pageShoppingCart.getTotalPrice();
-        String shippingPrice = pageShoppingCart.getShippingPrice();
-        String subTotal = pageShoppingCart.getSubTotal();
+        String totalPrice = pageShoppingCart.getTextOfElement(pageShoppingCart.labelTotalPrice);
+        String shippingPrice = pageShoppingCart.getTextOfElement(pageShoppingCart.labelShippingPrice);
+        String subTotal = pageShoppingCart.getTextOfElement(pageShoppingCart.labelSubTotal);
 
-        extentTest.log(Status.INFO,"Test Case 2: Total Price for selected items : " + totalPrice);
-        extentTest.log(Status.INFO,"Test Case 2: Shipping charge : " + shippingPrice);
-        extentTest.log(Status.INFO,"Test Case 2: Sub Total : " + subTotal);
-        extentTest.log(Status.PASS,"Test Case 2: Passed Successfully.");
+        extentTest.log(Status.INFO,"Test 2: Total Price for selected items : " + totalPrice);
+        extentTest.log(Status.INFO,"Test 2: Shipping charge : " + shippingPrice);
+        extentTest.log(Status.INFO,"Test 2: Sub Total : " + subTotal);
+        extentTest.log(Status.PASS,"Test 2: Passed Successfully.");
+
     }
 
 }
