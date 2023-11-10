@@ -1,4 +1,11 @@
 # Ebay_Automation_Using_Selenium_And_TestNG
 
+This is an automation project developed with Selenium and TestNG to test the advanced search functionality of the eBay website. It uses data from an Excel file in a data-driven approach to search for products on the platform. The system performs searches based on the provided data, extracts the results, and generates comprehensive reports, streamlining and automating the product search process.
 
-[![Watch the video]([https://i.stack.imgur.com/Vp2cE.png)](https://youtu.be/vt5fpE0bzSY](https://github.com/IsuruNWeerasinghe/Ebay_Automation_Using_Selenium_And_TestNG/blob/407a8774000e26913481f4a9ea3a886984913ccb/demo_videos/Advanced_Search_Automation.mp4)https://github.com/IsuruNWeerasinghe/Ebay_Automation_Using_Selenium_And_TestNG/blob/407a8774000e26913481f4a9ea3a886984913ccb/demo_videos/Advanced_Search_Automation.mp4)
+## Used Technologies
+  Java,
+  Selenium,
+  TestNG,
+  Extent Spark Reporting
+
+##  Demo Videos
