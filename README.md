@@ -10,5 +10,11 @@ This is an automation project developed with Selenium and TestNG to test the adv
 
 ##  Demo Videos
 
-### Search and Filters
-[![Watch the video]([https://img.youtube.com/vi/T-D1KVIuvjA/maxresdefault.jpg](https://github.com/IsuruNWeerasinghe/Ebay_Automation_Using_Selenium_And_TestNG/blob/5094c537294b4820d1c0cb36786c0097a9fb8eff/demo_videos/Homepage.png))]([https://youtu.be/T-D1KVIuvjA](https://github.com/IsuruNWeerasinghe/Ebay_Automation_Using_Selenium_And_TestNG/blob/5094c537294b4820d1c0cb36786c0097a9fb8eff/demo_videos/Search_and_Filter_Automation.mp4)https://github.com/IsuruNWeerasinghe/Ebay_Automation_Using_Selenium_And_TestNG/blob/5094c537294b4820d1c0cb36786c0097a9fb8eff/demo_videos/Search_and_Filter_Automation.mp4)
+### Search, Filter and adding product to the shopping cart.
+[![Now in Android: 55](https://github.com/IsuruNWeerasinghe/Ebay_Automation_Using_Selenium_And_TestNG/blob/5094c537294b4820d1c0cb36786c0097a9fb8eff/demo_videos/Homepage.png)](https://github.com/IsuruNWeerasinghe/Ebay_Automation_Using_Selenium_And_TestNG/blob/5094c537294b4820d1c0cb36786c0097a9fb8eff/demo_videos/Search_and_Filter_Automation.mp4 "Now in Android: 55")
+
+### Navigating through the top menubar and opening sub menu items.
+[![Now in Android: 55](https://github.com/IsuruNWeerasinghe/Ebay_Automation_Using_Selenium_And_TestNG/blob/5094c537294b4820d1c0cb36786c0097a9fb8eff/demo_videos/Shopping_cart.png)](https://github.com/IsuruNWeerasinghe/Ebay_Automation_Using_Selenium_And_TestNG/blob/5094c537294b4820d1c0cb36786c0097a9fb8eff/demo_videos/Top_Menubar_Automation.mp4 "Now in Android: 55")
+
+### Advanced Search items list form Excel file and adding prices to a report.
+[![Now in Android: 55](https://github.com/IsuruNWeerasinghe/Ebay_Automation_Using_Selenium_And_TestNG/blob/5094c537294b4820d1c0cb36786c0097a9fb8eff/demo_videos/Advanced_search.png)](https://github.com/IsuruNWeerasinghe/Ebay_Automation_Using_Selenium_And_TestNG/blob/5094c537294b4820d1c0cb36786c0097a9fb8eff/demo_videos/Advanced_Search_Automation.mp4 "Now in Android: 55")
